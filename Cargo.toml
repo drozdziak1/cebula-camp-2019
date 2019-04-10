@@ -6,3 +6,4 @@ edition = "2018"
 
 [dependencies]
 rpassword = "3.0"
+sha3 = "0.8"

@@ -10,14 +10,19 @@ mod type_system;
 use lib::*;
 use type_system::{Doge, Meme, MemeState, Pepe, Pope};
 
-fn zobacz_memy() {
-    let mut jp2 = Pope::new(
+#[derive(Debug)]
+pub enum MemeError {
+    ZombiePope,
+}
+
+fn zobacz_memy() -> Result<(), MemeError> {
+    let jp2 = Pope::new(
         "Jan Paweł II",
         MemeState::Dead(Utc.ymd(2005, 4, 2).and_hms(21, 37, 0)),
     );
 
     match jp2.state() {
-        MemeState::Alive => {}
+        MemeState::Alive => return Err(MemeError::ZombiePope),
         MemeState::Dead(when) => println!("{} died at {}", jp2.name(), when.naive_local()),
     }
 
@@ -33,10 +38,17 @@ fn zobacz_memy() {
 
     dbg!(doge);
 
-    let reeee = Pepe { name: "Reeeeeeeeeee Pepe".to_owned(), state: MemeState::Alive };
+    let reeee = Pepe {
+        name: "Reeeeeeeeeee Pepe".to_owned(),
+        state: MemeState::Alive,
+    };
 
     // kill() won't work, because it's neither implemented in the trait nor the Pepe struct
     //reeee.kill();
+
+    dbg!(reeee);
+
+    Ok(())
 }
 
 fn main() {
@@ -66,5 +78,5 @@ fn main() {
 
     println!("Username and hash together: {}", my_concat(username, &hash));
 
-    zobacz_memy();
+    zobacz_memy().unwrap();
 }

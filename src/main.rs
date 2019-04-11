@@ -1,11 +1,43 @@
+use chrono::prelude::*;
 use rpassword::prompt_password_stdout;
 use sha3::{Digest, Keccak256};
 
 use std::io::{self, Write};
 
 mod lib;
+mod type_system;
 
 use lib::*;
+use type_system::{Doge, Meme, MemeState, Pepe, Pope};
+
+fn zobacz_memy() {
+    let mut jp2 = Pope::new(
+        "Jan Paweł II",
+        MemeState::Dead(Utc.ymd(2005, 4, 2).and_hms(21, 37, 0)),
+    );
+
+    match jp2.state() {
+        MemeState::Alive => {}
+        MemeState::Dead(when) => println!("{} died at {}", jp2.name(), when.naive_local()),
+    }
+
+    let mut francis = Pope::new("Franciszek", MemeState::Alive);
+
+    dbg!(&francis);
+
+    francis.kill();
+
+    println!("After kill(): {:?}", francis);
+
+    let doge = Doge {};
+
+    dbg!(doge);
+
+    let reeee = Pepe { name: "Reeeeeeeeeee Pepe".to_owned(), state: MemeState::Alive };
+
+    // kill() won't work, because it's neither implemented in the trait nor the Pepe struct
+    //reeee.kill();
+}
 
 fn main() {
     let mut username = String::new();
@@ -33,4 +65,6 @@ fn main() {
     drop(password);
 
     println!("Username and hash together: {}", my_concat(username, &hash));
+
+    zobacz_memy();
 }

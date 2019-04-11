@@ -5,7 +5,7 @@ use std::io::{self, Write};
 
 mod lib;
 
-use lib::bytes2string;
+use lib::*;
 
 fn main() {
     let mut username = String::new();
@@ -23,10 +23,14 @@ fn main() {
         password = prompt_password_stdout("Password: ").unwrap();
     }
 
+    let hash = bytes2string(Keccak256::digest(password.as_bytes()).as_slice());
     println!(
         "Hello {}, you entered a pass {} chars long which hashes to {}",
         username,
         password.len(),
-        bytes2string(Keccak256::digest(password.as_bytes()).as_slice())
+        hash
     );
+    drop(password);
+
+    println!("Username and hash together: {}", my_concat(username, &hash));
 }

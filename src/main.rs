@@ -48,6 +48,27 @@ fn zobacz_memy() -> Result<(), MemeError> {
 
     dbg!(reeee);
 
+    let pepes = vec![
+        Pepe {
+            name: "Trump Pepe".to_owned(),
+            state: MemeState::Alive,
+        },
+        Pepe {
+            name: "Smug Pepe".to_owned(),
+            state: MemeState::Alive,
+        },
+        Pepe {
+            name: "Rarest Pepe™".to_owned(),
+            state: MemeState::Alive,
+        },
+    ];
+
+    // Some(pepes[0])
+    dbg!(pepes.get(0));
+
+    // None
+    dbg!(pepes.get(5));
+
     Ok(())
 }
 
